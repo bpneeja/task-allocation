@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Allocator</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 1em;
+            resize: vertical;
+            background-color: #f9f9f9;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #1a252f;
+        }
+        .result {
+            margin-top: 20px;
+            background-color: #f1f1f1;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            white-space: pre-wrap;
+            font-size: 1.1em;
+        }
+        .signature {
+            text-align: right;
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1>Task Allocator</h1>
+    <label for="names">Enter names (one per line):</label>
+    <textarea id="names" placeholder="e.g., John&#10;Jane&#10;Doe"></textarea>
+
+    <label for="tasks">Enter tasks (one per line):</label>
+    <textarea id="tasks" placeholder="e.g., Task A&#10;Task B&#10;Task C"></textarea>
+
+    <button onclick="allocateTasks()">Allocate Tasks</button>
+
+    <div class="result" id="result"></div>
+
+    <div class="signature">by bpneeja</div>
+
+    <script>
+        function allocateTasks() {
+            const names = document.getElementById('names').value.trim().split('\n');
+            const tasks = document.getElementById('tasks').value.trim().split('\n');
+
+            if (names.length === 0 || tasks.length === 0) {
+                alert('Please enter both names and tasks.');
+                return;
+            }
+
+            // Shuffle the tasks array
+            const shuffledTasks = tasks.sort(() => Math.random() - 0.5);
+            const resultDiv = document.getElementById('result');
+            let resultText = '';
+
+            for (let i = 0; i < names.length; i++) {
+                const task = shuffledTasks[i % shuffledTasks.length]; // Rotate tasks if fewer tasks than names
+                resultText += `${names[i]}: ${task}\n`;
+            }
+
+            resultDiv.textContent = resultText;
+        }
+    </script>
+</body>
+</html>
